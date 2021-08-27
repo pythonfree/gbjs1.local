@@ -7,8 +7,65 @@
 <body>
 
 <script>
+    // 1 Написать функцию, преобразующую число в объект. Передавая на вход число от 0 до 999, надо получить на вых
+    // оде объект, в котором в соответствующих свойствах описаны единицы, десятки и сотни. Например, для числа 245 н
+    // адо получить следующий объект: {‘единицы’: 5, ‘десятки’: 4, ‘сотни’: 2}. Если число превышает 999, необходимо
+    // выдать соответствующее сообщение с помощью console.log и вернуть пустой объект.
 
+    let x = {
+        'единицы': 0,
+        'десятки': 0,
+        'сотни': 0,
+        getNum(number) {
+            if (number > 999) {
+                console.log('Число не может быть больше 999!')
+                return null;
+            }
+            if (number >= 100) {
+                this.сотни = String(number)[0];
+                this.десятки = String(number)[1];
+                this.единицы = String(number)[2];
+            } else if (number < 100 && number >= 10) {
+                this.десятки = String(number)[0];
+                this.единицы = String(number)[1];
+            } else {
+                this.единицы = String(number)[0];
+            }
 
+            return this;
+        }
+    }
+
+    console.log(x.getNum(9999));
+    console.log(x.getNum(245));
+
+    // 2    Продолжить работу с интернет-магазином:
+    //    В прошлом домашнем задании вы реализовали корзину на базе массивов. Какими объектами можно заменить их элементы?
+    //     Реализуйте такие объекты.
+    //     Перенести функционал подсчета корзины на объектно-ориентированную базу.
+    let cart = [
+        {
+            id: 1,
+            price: 100,
+            count: 2
+        },
+        {
+            id: 2,
+            price: 200,
+            count: 3
+        }
+    ];
+
+    function getTotalPrice(cart = [])
+    {
+        let totalPrice = 0;
+        for (let item in cart) {
+            totalPrice += cart[item].price * cart[item].count;
+        }
+        return totalPrice;
+    }
+
+    console.log(getTotalPrice(cart));
 
 </script>
 </body>
