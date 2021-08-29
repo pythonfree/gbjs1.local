@@ -47,8 +47,14 @@
     <div class="right"></div>
 </div>
 
+<div class="cart"></div>
+
 <script>
     'use strict';
+
+    // 1.	Создать функцию, генерирующую шахматную доску. Можно использовать любые html-теги. Доска должна быть верно
+    // разлинована на черные и белые ячейки. Строки должны нумероваться числами от 1 до 8, столбцы — латинскими буквами
+    // A, B, C, D, E, F, G, H.
 
     // top and bottom char fields
     const chars = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
@@ -161,7 +167,44 @@
 
     render();
 
+    // 2.	Сделать генерацию корзины динамической: верстка корзины не должна находиться в HTML-структуре. Там должен
+    // быть только div, в который будет вставляться корзина, сгенерированная на базе JS:
+    //     a.	Пустая корзина должна выводить строку «Корзина пуста»;
+    // b.	Наполненная должна выводить «В корзине: n товаров на сумму m рублей».
 
+    const goods = [
+        {
+            'id': 1,
+            'price': 100
+        },
+        {
+            'id': 2,
+            'price': 200
+        }
+    ];
+
+    let cartCount = 0;
+    let totalPrice = 0;
+    function getGoodsCounts() {
+
+        for (let item of goods) {
+            totalPrice += item.price;
+            cartCount++;
+        }
+        return {totalPrice: totalPrice, cartCount: cartCount};
+    }
+    getGoodsCounts();
+
+    const cart = document.querySelector('.cart');
+
+    const price = document.createElement('SPAN');
+    //В корзине: n товаров на сумму m рублей
+    if (cartCount) {
+        price.textContent = `В корзине: ${String(cartCount)} товаров на сумму ${String(totalPrice)} рублей.`;
+    } else {
+        price.textContent = `Корзина пуста.`;
+    }
+    cart.appendChild(price);
 
 </script>
 </body>
