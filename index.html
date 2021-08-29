@@ -4,9 +4,162 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<style>
+    .list {
+        border: solid 1px black;
+    }
+    .list-item {
+        display: flex;
+    }
+    .cell {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .white {
+        background-color: white;
+    }
+    .black {
+        background-color: black;
+    }
+    .board {
+        display: flex;
+    }
+    .container {
+        display: flex;
+    }
+    .column {
+        display: flex;
+        flex-direction: column;
+    }
+</style>
 <body>
 
+<div class="board">
+    <div class="left"></div>
+    <div class="main">
+        <div class="top"></div>
+        <div class="list"></div>
+        <div class="bottom"></div>
+    </div>
+    <div class="right"></div>
+</div>
+
 <script>
+    'use strict';
+
+    // top and bottom char fields
+    const chars = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+
+    const listElementTop = document.querySelector('.top');
+    const listElementBottom = document.querySelector('.bottom');
+
+    function createCharField() {
+        const container = document.createElement('DIV');
+        container.classList.add('container');
+
+        for (let char of chars) {
+            const box = document.createElement('DIV');
+            box.classList.add('cell');
+
+            const title = document.createElement('SPAN');
+            title.textContent = char;
+
+            box.appendChild(title);
+            container.appendChild(box);
+        }
+
+        return container;
+    }
+
+    function renderCharFields() {
+        listElementTop.appendChild(createCharField());
+        listElementBottom.appendChild(createCharField());
+    }
+
+    renderCharFields();
+
+    // left and right number fields
+    const nums = ['', '1', '2', '3', '4', '5', '6', '7', '8', ''];
+
+    const listElementLeft = document.querySelector('.left');
+    const listElementRight = document.querySelector('.right');
+
+    function createNumField() {
+        const column = document.createElement('DIV');
+        column.classList.add('column');
+
+        for (let num of nums) {
+            const box = document.createElement('DIV');
+            box.classList.add('cell');
+
+            const title = document.createElement('SPAN');
+            title.textContent = num;
+
+            box.appendChild(title);
+            column.appendChild(box);
+        }
+
+        return column;
+    }
+
+    function renderNumFields() {
+        listElementLeft.appendChild(createNumField());
+        listElementRight.appendChild(createNumField());
+    }
+
+    renderNumFields();
+
+    //board cells
+    const cells = [];
+
+    const listElement = document.querySelector('.list');
+
+    function createChessRow(lineId) {
+        const container = document.createElement('DIV');
+        container.classList.add('list-item');
+
+        for (let i = 0; i < 8; i++) {
+            const box = document.createElement('DIV');
+            box.classList.add('cell');
+
+            if (lineId % 2 === 0) {
+                if (i % 2 === 0) {
+                    box.classList.add('black');
+                } else {
+                    box.classList.add('white');
+                }
+            } else {
+                if (i % 2 === 0) {
+                    box.classList.add('white');
+                } else {
+                    box.classList.add('black');
+                }
+            }
+
+            container.appendChild(box);
+        }
+
+        return container;
+    }
+
+    function Cell(lineId = '') {
+        this.lineId = lineId;
+    }
+
+    for (let i = 0; i < 8; i++) {
+        cells.push(new Cell(i));
+    }
+
+    function render() {
+        for (let cell of cells) {
+            listElement.appendChild(createChessRow(cell.lineId));
+        }
+    }
+
+    render();
 
 
 
